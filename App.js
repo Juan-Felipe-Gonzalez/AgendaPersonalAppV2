@@ -30,7 +30,7 @@ function AppContent() {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <Text style={{padding: 15}}>bb que mas pues </Text>
+        <Text style={{ padding: 15 }}>Holis </Text>
       </ SafeAreaView>
       <NewAppScreen
         templateFileName="App.tsx"
