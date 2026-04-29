@@ -7,7 +7,7 @@ import { COLORS } from '../utils/constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
-import { Icon } from 'react-native-vector-icons/Icon';
+import { Icon } from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function HomeScreen({ navigation }) {
   const [tasks, setTasks] = useState([]);
@@ -41,7 +41,12 @@ export default function HomeScreen({ navigation }) {
 
         <TouchableOpacity
           onPress={() => navigation.navigate('AddEditTask', { task: null })}
-          style={{ backgroundColor: COLORS.primary, shadowOpacity: 0.3, shadowRadius: 5, shadowColor: COLORS.primary }}
+          style={{
+            backgroundColor: COLORS.primary,
+            shadowOpacity: 0.3,
+            shadowRadius: 5,
+            shadowColor: COLORS.primary,
+          }}
         >
           <Icon name="plus" size={30} color={'white'} />
         </TouchableOpacity>
