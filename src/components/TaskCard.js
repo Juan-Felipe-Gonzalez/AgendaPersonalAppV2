@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { FontAwesomeFreeSolid } from '@react-native-vector-icons/fontawesome-free-solid';
 import { PRIORITY, COLORS } from '../utils/constants';
 import { deleteTask } from '../storage/TaskStorage';
 
@@ -26,7 +26,7 @@ const TaskCard = (task, onDelete, onEdit) => {
         <Text>{task.priority}</Text>
       </View>
       <TouchableOpacity onPress={handleDelete} className="p-1">
-        <Icon name="trash-can-outline" size={20} color={COLORS.danger} />
+        <FontAwesomeFreeSolid name="trash" size={20} color={COLORS.danger} />;
       </TouchableOpacity>
     </TouchableOpacity>
   );

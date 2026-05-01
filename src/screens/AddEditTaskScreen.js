@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Alert, Pressable, Text, TextInput, View } from 'react-native';
+import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from './../utils/constants';
 import { updateTask } from './../storage/TaskStorage';
 import DateTimePicker, { useDefaultStyles } from 'react-native-ui-datepicker';
-import { Select } from 'react-native-ui';
+import { Select } from 're-native-ui';
+import { addTask } from './../storage/TaskStorage';
+import { FontAwesomeFreeSolid } from '@react-native-vector-icons/fontawesome-free-solid';
 
 const generateId = () => {
   return Date.now().toString(36) + Math.random.toString(36).substring(2, 9);
@@ -68,6 +70,14 @@ export default function AddEditTaskScreen({ navigation, route }) {
         priority: priority.trim(),
         createAt: new Date().toISOString(),
       };
+
+      const result = await addTask(newTask);
+
+      if (result) {
+        navigation.goBack();
+      } else {
+        Alert.alert('Error', 'The task couldnt be created');
+      }
     }
   };
 
@@ -121,12 +131,22 @@ export default function AddEditTaskScreen({ navigation, route }) {
               onChange={setSelectedValue}
               options={options}
             />
-            ;
           </View>
 
-          <Pressable onPress={handleSave}>
-            <Text>Save/Update</Text>
-          </Pressable>
+          <TouchableOpacity
+            onPress={handleSave}
+            style={{
+              backgroundColor: COLORS.primary,
+              shadowOpacity: 0.3,
+              shadowRadius: 5,
+              shadowColor: COLORS.primary,
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingVertical: 10,
+            }}
+          >
+            <FontAwesomeFreeSolid name="floppy-disk" size={30} color="white" />;
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

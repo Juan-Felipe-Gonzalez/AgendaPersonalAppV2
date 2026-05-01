@@ -1,28 +1,24 @@
-import { StatusBar, StyleSheet, Text, useColorScheme } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import * as React from 'react';
+import { StatusBar, Text, View } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './src/screens/HomeScreen';
 import AddEditTaskScreen from "./src/screens/AddEditTaskScreen"
 
-const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
-
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
+export default function App() {
   return (
-    <SafeAreaProvider style={styles.safeAreaProvider}>
-      <SafeAreaView>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <AddEditTaskScreen />
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <StatusBar barStyle="dark-content" backgroundColor="black" />
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Home' }}
+        />
+        <Stack.Screen name="AddEditTask" component={AddEditTaskScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  safeAreaProvider: {
-    flex: 1,
-  },
-});
-
-export default App;
