@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import EmptyState from '../components/EmptyState';
 import TaskCard from '../components/TaskCard';
-import { deleteTask, getTasks } from '../storage/TaskStorage';
+import { deleteTask, getTasks, initialData } from '../storage/TaskStorage';
 import { COLORS } from '../utils/constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
@@ -18,6 +18,19 @@ export default function HomeScreen({ navigation }) {
     if (updateTasks) setTasks(updateTasks);
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      const datas = await initialData();
+      console.log('Cargamos las tareas iniciales', datas);
+
+      const newTasks = await getTasks();
+      console.log('Obtenemos las tareas iniciales', newTasks);
+
+      setTasks(newTasks);
+    }
+    fetchData();
+  }, []);
+
   const handleEdit = task => {
     navigation.navigate('AddEditTask', { task });
   };
@@ -30,8 +43,8 @@ export default function HomeScreen({ navigation }) {
 
       <FlatList
         data={tasks}
-        keyExtractor={item => item.id}
-        renderItem={item => (
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => (
           <TaskCard task={item} onDelete={handleDelete} onEdit={handleEdit} />
         )}
         ListEmptyComponent={<EmptyState />}

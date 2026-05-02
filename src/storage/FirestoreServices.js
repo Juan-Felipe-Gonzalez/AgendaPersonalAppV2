@@ -5,10 +5,12 @@ const taskCollection = firestore().collection('tasks');
 export const getTasks = async () => {
   try {
     const snapshot = await taskCollection.orderBy('createdAt', 'desc').get();
-    const task = snapshot.docs.map(doc => ({
+    const tasks = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     }))
+
+    return tasks
   } catch (error) {
     console.error('Error getting tasks from db', error);
     return [];

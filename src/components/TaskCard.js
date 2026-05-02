@@ -18,7 +18,7 @@ const TaskCard = (task, onDelete, onEdit) => {
   };
 
   return (
-    <TouchableOpacity>
+    <View>
       <View>
         <Text>{task.title}</Text>
       </View>
@@ -28,7 +28,7 @@ const TaskCard = (task, onDelete, onEdit) => {
       <TouchableOpacity onPress={handleDelete} className="p-1">
         <FontAwesomeFreeSolid name="trash" size={20} color={COLORS.danger} />;
       </TouchableOpacity>
-    </TouchableOpacity>
+    </View>
   );
 };
 

@@ -17,7 +17,10 @@ export default function App() {
           component={HomeScreen}
           options={{ title: 'Home' }}
         />
-        <Stack.Screen name="AddEditTask" component={AddEditTaskScreen} />
+        <Stack.Screen 
+          name="AddEditTask" 
+          component={AddEditTaskScreen} 
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

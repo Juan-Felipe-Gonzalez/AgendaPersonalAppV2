@@ -4,9 +4,7 @@ export const PRIORITY = {
     baja: {label: 'Baja', color: '#4CAF50', icon: 'flag'}
 }
 
-const STORAGE_KEY = '@agenda_taks'
-
-export default  STORAGE_KEY 
+export const STORAGE_KEY = '@agenda_taks'
 
 export const COLORS = {
   primary: '#6C63FF',       // Morado
