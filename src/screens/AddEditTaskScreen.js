@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from './../utils/constants';
@@ -49,11 +55,16 @@ export default function AddEditTaskScreen({ navigation, route }) {
     });
   }, [navigation, isEditing]);
 
+  const validateEmptyFields = () => {
+    // ToDo
+    // if (!title.trim()) {
+    //   Alert.alert('Error', 'Title is required');
+    //   return;
+    // }
+  };
+
   const handleSave = async () => {
-    if (!title.trim()) {
-      Alert.alert('Error', 'Title is required');
-      return;
-    }
+    validateEmptyFields();
 
     if (isEditing) {
       const result = await updateTask();
@@ -63,11 +74,11 @@ export default function AddEditTaskScreen({ navigation, route }) {
     } else {
       const newTask = {
         id: generateId(),
-        title: title.trim(),
-        description: description.trim(),
-        date: date.trim(),
-        time: time.trim(),
-        priority: priority.trim(),
+        title: title.trim() || 'Default title',
+        description: description.trim() || 'Default description',
+        date: date.trim() || '2026-12-24',
+        time: time.trim() || '8:00 AM',
+        priority: priority.trim() || 'LOW',
         createAt: new Date().toISOString(),
       };
 

@@ -31,6 +31,15 @@ export default function HomeScreen({ navigation }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      const newTasks = await getTasks();
+      setTasks(newTasks);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   const handleEdit = task => {
     navigation.navigate('AddEditTask', { task });
   };

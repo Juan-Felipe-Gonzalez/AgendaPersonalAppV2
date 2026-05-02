@@ -54,7 +54,7 @@ export const addTask = async task => {
     // Do I have any task?
     const tasks = await getTasks();
     const updateTasks = [...tasks, task];
-    await saveTasks(tasks);
+    await saveTasks(updateTasks);
     return updateTasks;
   } catch (error) {
     console.error('Error adding the task', error);
