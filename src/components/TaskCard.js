@@ -2,11 +2,11 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesomeFreeSolid } from '@react-native-vector-icons/fontawesome-free-solid';
 import { PRIORITY, COLORS } from '../utils/constants';
 
-const TaskCard = (task, onDelete, onEdit) => {
-  const priority = PRIORITY[task.priority] || PRIORITY.media;
+const TaskCard = ({ task, onDelete, onEdit }) => {
+  const priority = PRIORITY[task.priority] || PRIORITY.medium;
 
   const handleDelete = () => {
-    Alert.alert('Delete task', 'are u sure?', [
+    Alert.alert('Deleting task', 'are u sure?', [
       { text: 'Dimiss', style: 'cancel' },
       {
         text: 'Delete',
@@ -35,19 +35,19 @@ const TaskCard = (task, onDelete, onEdit) => {
     >
       <View>
         <View>
-          <Text style={{ fontWeight: 'bold' }}>{task.task.title}</Text>
+          <Text style={{ fontWeight: 'bold' }}>{task.title}</Text>
         </View>
         <View>
-          <Text>{task.task.priority}</Text>
+          <Text>{task.priority}</Text>
         </View>
       </View>
 
       <View style={{ display: 'flex', flexDirection: 'row', gap: 12 }}>
-        <TouchableOpacity onPress={() => onEdit(task.task)} className="p-1">
+        <TouchableOpacity onPress={() => onEdit(task)} className="p-1">
           <FontAwesomeFreeSolid name="pencil" size={20} color={COLORS.danger} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleDelete} className="p-1">
-          <FontAwesomeFreeSolid name="trash" size={20} color={COLORS.danger} />;
+          <FontAwesomeFreeSolid name="trash" size={20} color={COLORS.danger} />
         </TouchableOpacity>
       </View>
     </View>

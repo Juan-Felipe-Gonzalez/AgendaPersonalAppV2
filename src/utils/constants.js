@@ -1,7 +1,7 @@
 export const PRIORITY = {
-    alta: {label: 'Alta', color: '#FF5252', icon: 'flag'},
-    media: {label: 'Media', color: '#FFC107', icon: 'flag'},
-    baja: {label: 'Baja', color: '#4CAF50', icon: 'flag'}
+    high: {label: 'High', color: '#FF5252', icon: 'flag'},
+    medium: {label: 'Medium', color: '#FFC107', icon: 'flag'},
+    low: {label: 'Low', color: '#4CAF50', icon: 'flag'}
 }
 
 export const STORAGE_KEY = '@agenda_taks'

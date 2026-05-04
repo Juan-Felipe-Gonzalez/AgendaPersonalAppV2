@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  Alert,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from './../utils/constants';
@@ -22,16 +16,13 @@ const generateId = () => {
 export default function AddEditTaskScreen({ navigation, route }) {
   const existingTask = route.params?.task;
   const isEditing = !!existingTask; // its like === but !!
+  const defaultStyles = useDefaultStyles();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [date, setDate] = useState();
   const [priority, setPriority] = useState('');
-
-  const defaultStyles = useDefaultStyles();
-  const [selected, setSelected] = useState();
-  const [selectedValue, setSelectedValue] = useState('');
 
   const options = [
     { label: 'High', value: 'High' },
@@ -76,7 +67,7 @@ export default function AddEditTaskScreen({ navigation, route }) {
         id: generateId(),
         title: title.trim() || 'Default title',
         description: description.trim() || 'Default description',
-        date: date.trim() || '2026-12-24',
+        date: date || '2026-12-24',
         time: time.trim() || '8:00 AM',
         priority: priority.trim() || 'LOW',
         createAt: new Date().toISOString(),
@@ -102,9 +93,9 @@ export default function AddEditTaskScreen({ navigation, route }) {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        <View>
-          <View>
-            <Text>Task Title</Text>
+        <View >
+          <View style={styles.container}>
+            <Text style={styles.titles}>Task Title</Text>
             <TextInput
               value={title}
               onChangeText={setTitle}
@@ -112,34 +103,43 @@ export default function AddEditTaskScreen({ navigation, route }) {
               maxLength={100}
               className="text-base px-3 py-4 bg-white"
               style={{
-                color: COLORS.primary,
                 borderColor: COLORS.border,
               }}
+              autoCapitalize='sentences'
             />
           </View>
 
-          <View>
-            <Text>Description</Text>
-            <TextInput editable multiline numberOfLines={4} maxLength={40} />
+          <View style={styles.container}>
+            <Text style={styles.titles}>Description</Text>
+            <TextInput
+              editable
+              multiline
+              numberOfLines={4}
+              maxLength={40}
+              placeholder="Task description"
+              value={description}
+              onChangeText={setDescription}
+              autoCapitalize='sentences'
+            />
           </View>
 
-          <View>
-            <Text>Date & Time</Text>
+          <View style={styles.container}>
+            <Text style={styles.titles}>Date & Time</Text>
             <DateTimePicker
               mode="single"
-              date={selected}
-              onChange={({ date }) => setSelected(date)}
+              date={date}
+              onChange={({ date }) => setDate(date)}
               styles={defaultStyles}
             />
           </View>
 
-          <View>
-            <Text>Priority</Text>
+          <View style={styles.container}>
+            <Text style={styles.titles}>Priority</Text>
             <Select
               label="Choose an option"
               placeholder="Select an option"
-              value={selectedValue}
-              onChange={setSelectedValue}
+              value={priority}
+              onChange={setPriority}
               options={options}
             />
           </View>
@@ -156,10 +156,25 @@ export default function AddEditTaskScreen({ navigation, route }) {
               paddingVertical: 10,
             }}
           >
-            <FontAwesomeFreeSolid name="floppy-disk" size={30} color="white" />;
+            <FontAwesomeFreeSolid name="floppy-disk" size={30} color="white" />
           </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal:10
+  },
+  titles: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginTop: 10,
+    marginBottom: 8, 
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    borderStyle: "solid"
+  }
+})

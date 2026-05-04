@@ -4,7 +4,7 @@ import { COLORS } from './../utils/constants';
 
 export default function EmptyState() {
   return (
-    <View className="flex-1 justify-center px-8 items-center">
+    <View className="flex-1 justify-center px-8 items-center mt-6">
       <Text className="text-xl font-bold text-gray-600 text-center">
         There isn't tasks
       </Text>

@@ -14,17 +14,18 @@ export default function HomeScreen({ navigation }) {
   const handleDelete = async taskId => {
     // return null if error
     const updateTasks = await deleteTask(taskId);
-
     if (updateTasks) setTasks(updateTasks);
+  };
+
+  const handleEdit = task => {
+    navigation.navigate('AddEditTask', { task });
   };
 
   useEffect(() => {
     async function fetchData() {
-      const datas = await initialData();
-      console.log('Cargamos las tareas iniciales', datas);
+      await initialData();
 
       const newTasks = await getTasks();
-      console.log('Obtenemos las tareas iniciales', newTasks);
 
       setTasks(newTasks);
     }
@@ -32,6 +33,7 @@ export default function HomeScreen({ navigation }) {
   }, []);
 
   useEffect(() => {
+    // Reload/rerender homescreen with new tasks
     const unsubscribe = navigation.addListener('focus', async () => {
       const newTasks = await getTasks();
       setTasks(newTasks);
@@ -40,19 +42,16 @@ export default function HomeScreen({ navigation }) {
     return unsubscribe;
   }, [navigation]);
 
-  const handleEdit = task => {
-    navigation.navigate('AddEditTask', { task });
-  };
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
-        <Text>My personal planner</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 22, marginLeft: 15}}>My personal planner</Text>
       </View>
 
       <FlatList
         data={tasks}
         keyExtractor={item => item.id.toString()}
+        // ToDo: En que momento sabe handledelete sus parametros?
         renderItem={({ item }) => (
           <TaskCard task={item} onDelete={handleDelete} onEdit={handleEdit} />
         )}
@@ -71,7 +70,7 @@ export default function HomeScreen({ navigation }) {
           paddingVertical: 10,
         }}
       >
-        <FontAwesomeFreeSolid name="plus" size={30} color="white" />;
+        <FontAwesomeFreeSolid name="plus" size={30} color="white" />
       </TouchableOpacity>
     </SafeAreaView>
   );

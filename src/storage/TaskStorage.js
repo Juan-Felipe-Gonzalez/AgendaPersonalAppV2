@@ -2,25 +2,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEY } from '../utils/constants';
 import { createAsyncStorage } from '@react-native-async-storage/async-storage';
 
+const generateId = () => {
+  return Date.now().toString(36) + Math.random.toString(36).substring(2, 9);
+};
+
 // create a storage instance
 export const storage = createAsyncStorage('appDB');
 
 export const initialData = async () => {
   const newTask = {
-    id: '1234',
+    id: generateId(),
     title: 'Tarea demo',
     description: 'Descripción de la tarea demo',
     date: '2026/07/22',
     time: '3:00 am',
     priority: 'Alta',
     createAt: new Date().toISOString(),
-  }
+  };
 
-  return await addTask(newTask)
-
-  const jsonValue = JSON.stringify(newTask);
-  await AsyncStorage.setItem(STORAGE_KEY, jsonValue);
-  return await AsyncStorage.getItem(STORAGE_KEY)
+  return await addTask(newTask);
 };
 
 export const getTasks = async () => {
@@ -53,7 +53,7 @@ export const addTask = async task => {
   try {
     // Do I have any task?
     const tasks = await getTasks();
-    const updateTasks = [...tasks, task];
+    const updateTasks = [task, ...tasks ];
     await saveTasks(updateTasks);
     return updateTasks;
   } catch (error) {
@@ -85,10 +85,7 @@ export const updateTask = async taskUpdated => {
 export const deleteTask = async taskId => {
   try {
     const tasks = await getTasks();
-    const updateTasks = tasks.filter(item => {
-      item.id !== taskId;
-    });
-
+    const updateTasks = tasks.filter(item => item.id !== taskId);
     await saveTasks(updateTasks);
     return updateTasks;
   } catch (error) {
