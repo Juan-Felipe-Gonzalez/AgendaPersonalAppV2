@@ -53,7 +53,7 @@ export const addTask = async task => {
   try {
     // Do I have any task?
     const tasks = await getTasks();
-    const updateTasks = [task, ...tasks ];
+    const updateTasks = [task, ...tasks];
     await saveTasks(updateTasks);
     return updateTasks;
   } catch (error) {
@@ -62,20 +62,15 @@ export const addTask = async task => {
   }
 };
 
-// Todo, función como homework, validar mas adelante
 export const updateTask = async taskUpdated => {
   try {
     const tasks = await getTasks();
-    const { taskId } = taskUpdated;
+    const { id } = taskUpdated;
 
-    for (let i = 0; i < tasks.length; i++) {
-      if (tasks[i].taskId === taskId) {
-        tasks[i] = taskUpdated;
-      }
-    }
+    const newArray = tasks.map(task => (task.id === id ? taskUpdated : task));
 
-    await saveTasks(tasks);
-    return tasks;
+    await saveTasks(newArray);
+    return newArray;
   } catch (error) {
     console.error('Error updating the task', error);
     return null;

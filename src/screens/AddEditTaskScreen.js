@@ -58,7 +58,17 @@ export default function AddEditTaskScreen({ navigation, route }) {
     validateEmptyFields();
 
     if (isEditing) {
-      const result = await updateTask();
+      const updatedTask = {
+        id: route.params.task.id,
+        title: title.trim(),
+        description: description.trim(),
+        date: date,
+        time: time.trim(),
+        priority: priority.trim(),
+        createAt: route.params.task.createAt,
+      };
+
+      const result = await updateTask(updatedTask);
 
       if (result) navigation.goBack();
       else Alert.alert('Error', 'Couldnt updated the task');
